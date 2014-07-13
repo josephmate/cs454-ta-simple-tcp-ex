@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
     printf("read %d bytes\n", numbytes);
     printf("read a: %d \n", a);
 
-    numbytes = recv(sockfd, &a, sizeof(b), 0);
+    numbytes = recv(sockfd, &b, sizeof(b), 0);
     printf("read %d bytes\n", numbytes);
     printf("read b: %d \n", b);
 

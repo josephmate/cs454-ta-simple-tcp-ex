@@ -16,5 +16,4 @@ Client std out:
 		read 4 bytes
 		read a: 4
 		read 4 bytes
-		read b: 32767
-
+		read b: 5

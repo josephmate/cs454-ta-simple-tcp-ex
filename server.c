@@ -130,7 +130,7 @@ int main(void)
     sockToClientfd = wait_for_conn(sockfd);
 
     send(sockToClientfd, &a, sizeof(a), 0);
-    send(sockToClientfd, &a, sizeof(b), 0);
+    send(sockToClientfd, &b, sizeof(b), 0);
 
     close(sockToClientfd);
     close(sockfd);
