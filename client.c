@@ -28,24 +28,17 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main(int argc, char *argv[])
-{
-    int sockfd, numbytes;  
-    char buf[MAXDATASIZE];
+int conn(char hostname[], char port[]) {
+    int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
-
-    if (argc != 2) {
-        fprintf(stderr,"usage: client hostname\n");
-        exit(1);
-    }
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
-    if ((rv = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo(hostname, port, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
     }
@@ -78,14 +71,23 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-    if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-        perror("recv");
-        exit(1);
-    }
+    return sockfd;
+}
 
-    buf[numbytes] = '\0';
+int main(int argc, char *argv[]) {
+    int sockfd, numbytes;  
+    int a,b;
+    char buf[MAXDATASIZE];
 
-    printf("client: received '%s'\n",buf);
+    sockfd = conn("localhost", PORT);
+
+    numbytes = recv(sockfd, &a, sizeof(a), 0);
+    printf("read %d bytes\n", numbytes);
+    printf("read a: %d \n", a);
+
+    numbytes = recv(sockfd, &a, sizeof(b), 0);
+    printf("read %d bytes\n", numbytes);
+    printf("read b: %d \n", b);
 
     close(sockfd);
 

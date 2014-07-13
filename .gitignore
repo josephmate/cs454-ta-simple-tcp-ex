@@ -22,6 +22,9 @@
 *.x86_64
 *.hex
 
+# vim temp files
+*.swp
+
 # resulting executables
 server
 client
